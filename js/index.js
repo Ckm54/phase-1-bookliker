@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
         fetch("http://localhost:3000/books")
         .then(response => response.json())
         .then(data => {
-            console.log(data)
+            // console.log(data)
             data.forEach(element => {
                 displayBookTitle(element)
             });
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
         `
         const ul = document.createElement("ul")
         book.users.forEach(user => {
-            console.log(user)
+            // console.log(user)
             let li = document.createElement("li")
             li.innerText = user.username
             ul.append(li)
@@ -50,13 +50,35 @@ document.addEventListener("DOMContentLoaded", function() {
         bookDataContainer.append(div)
 
         button.addEventListener("click", () => {
-            console.log("click")
+            handleBtnClick(book.id, book.users)
         })
         
     }
     getBooks()
 
+    
     fetch("http://localhost:3000/users")
     .then(response => response.json())
     .then(data => console.log(data))
+
+    function handleBtnClick(id, users) {
+        let userInfo = {
+            users: [
+                ...users,
+                {
+                    id: (users.length+1),
+                    username: "collins"
+                }
+            ]
+        }
+        fetch(`http://localhost:3000/books/${id}`, {
+            method: 'PATCH', 
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(userInfo)
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+    }
 });
