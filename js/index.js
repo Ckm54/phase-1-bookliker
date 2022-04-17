@@ -42,9 +42,16 @@ document.addEventListener("DOMContentLoaded", function() {
             li.innerText = user.username
             ul.append(li)
         })
+        let button = document.createElement("button")
+        button.innerText = "Like"
         div.innerHTML = bookItem
         div.append(ul)
+        div.append(button)
         bookDataContainer.append(div)
+
+        button.addEventListener("click", () => {
+            console.log("click")
+        })
         
     }
     getBooks()
